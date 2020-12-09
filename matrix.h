@@ -5,20 +5,29 @@
 
 #include <stddef.h>
 #include <vector>
+#include "vector.h"
+
+/**
+ * Square matrix class that stores elements of type T
+ * @tparam T the elements in the matrix
+ * @tparam N the dimension of the square matrix
+ */
 template<typename T, size_t N>
 class Matrix{
 public:
-    static constexpr size_t order = N;
-    using value_type = T;
-    using iterator = typename std::vector<T>::iterator;
-    using const_iterator = typename std::vector<T>::const_iterator;
-
-    Matrix()=default;
-    Matrix(Matrix&&) = default;
-    Matrix& operator=(Matrix&&)= default;
-    Matrix(const Matrix&) = default;
-    Matrix& operator=(const Matrix&) = default;
-    ~Matrix()=default;
+    Matrix(std::initializer_list<T> elems, size_t dim);
+    std::vector<T> row();
+    std::vector<T> col();
+    Vector rowVector(); // rows must be 3D float tuple only
+    Vector rowColumn(); //cols must be 3D float tuple only
+    Matrix<T,N> operator+(Matrix<T,N>) const;
+    Matrix<T,N> operator-(Matrix<T,N>) const;
+    Matrix<T,N> operator*(float c) const;
+    friend Matrix<T,N> operator*(Matrix<T,N> M, Vector V);
+private:
+    size_t size;
+    std::vector<T> elems;
 
 //    template<typename U> Matrix(const Matrix_ref<U,N>&);
 };
+
