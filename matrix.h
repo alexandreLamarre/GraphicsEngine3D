@@ -25,14 +25,16 @@ public:
     Matrixf<N> operator+(Matrixf<N> M) const;
     Matrixf<N> operator-(Matrixf<N> M) const;
     Matrixf<N> operator^(int power);
+    std::vector<float> operator[](int index);
     friend Matrixf<N> operator*(float c, Matrixf<N> M);
     friend Matrixf<N> operator*(Matrixf<N> M, Matrixf<N> K);
     static float dotProduct(std::vector<float> row, std::vector<float> col);
     Matrixf<N> invert();
-    Matrixf<N> det();
+    friend float det(Matrixf<N> M);
 private:
     size_t size;
     std::vector<float> elems;
+    friend float det(float matrix[N][N], size_t cur_size);
 };
 
 

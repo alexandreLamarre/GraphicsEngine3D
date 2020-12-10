@@ -1,6 +1,8 @@
 #include "matrix.h"
 #include <iostream>
 #include <stddef.h>
+#include <math.h>
+
 //================= Matrixf:  Float square Matrix methods =======================
 /**
  * Default Square matrix initializer. Initializes a matrix to the identity.
@@ -186,7 +188,7 @@ Matrixf<N> Matrixf<N>::operator^(int power) {
         return Matrixf<N>(); //the identity matrix of dim N
      }
      if(power < 0){
-        //invert the matrix if possible the apply successive mult.
+        //invert the matrix if possible then apply successive mult.
      }
      if(power > 0){
 
@@ -212,15 +214,76 @@ float Matrixf<N>::dotProduct(const std::vector<float> row, const std::vector<flo
     return res;
 }
 
+/**
+ *
+ * @tparam N
+ * @return
+ */
 template<size_t N>
 Matrixf<N> Matrixf<N>::invert() {
-    return Matrixf<N>();
+    if(this->det() == 0) return this;
+
 }
 
+/**
+ *
+ * @tparam N
+ * @param M
+ * @return
+ */
 template<size_t N>
-Matrixf<N> Matrixf<N>::det() {
-    return Matrixf<N>();
+float det(Matrixf<N> M) {
+    float submatrix[N][N];
+    //constructing reusable 2-D float array
+    for(int row = 0; row < N; row++){
+        for(int col = 0; col < N; col++){
+            submatrix[row][col] = M[row][col];
+        }
+    }
+    return M.det(submatrix, M.size);
 }
+
+/**
+ *
+ * @tparam N
+ * @param M
+ * @param cur_size
+ * @return
+ */
+template<size_t N>
+float det(float matrix[N][N], size_t cur_size) {
+    float det = 0;
+    float submatrix[N][N];
+    if(cur_size == 1) return matrix[0][0]; // should only happen if N = 1 from the start
+    if(cur_size == 2) return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+    else{
+        for(int x = 0; x < cur_size; x++){
+            int subi = 0;
+            for(int i = 0; i < cur_size; i++){
+                int subj = 0;
+                for(int j = 0; j < cur_size; j++){
+                    if(j == x) continue;
+                    submatrix[subi][subj] = matrix[i][j];
+                    subj++;
+                }
+            }
+            det = det + (pow(-1,x))*matrix[0][x]* det(submatrix, cur_size-1);
+        }
+    }
+    return det;
+}
+
+/**
+ * Access row at given index
+ * @tparam N dimension of square matrix
+ * @param index the index of the row
+ * @return  row vector at given index
+ */
+template<size_t N>
+std::vector<float> Matrixf<N>::operator[](int index) {
+    return this->row(index);
+}
+
 
 
 
