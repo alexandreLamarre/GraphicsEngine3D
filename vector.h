@@ -17,13 +17,17 @@ template<size_t N>
 class Vectorf{
 public:
     Vectorf();
-    Vectorf(std::initializer_list<float>);
+    Vectorf(std::initializer_list<float> input);
     Vectorf<N> operator+(Vectorf<N> V);
     Vectorf<N> operator-(Vectorf<N> V);
-    float operator*(Vectorf<N> V); //dotproduct
+    float operator*(Vectorf<N> V); //dot product
     Vectorf<N> operator^(Vectorf<N> V); //cross product
     friend Vectorf<N> operator*(float c, Vectorf<N> V);
-    friend std::ostream& operator<< (std::ostream &o, Vectorf<N> V);
+    float norm();
+    float norm2(); //square of norm to avoid sqrt operations
+    bool operator<(Vectorf<N> other_vector); //between origin and other vector
+    bool operator<(float dist); // norm is smaller than given norm
+    friend std::ostream& operator<< (std::ostream &os, Vectorf<N> V);
 
     Vectorf<N> normalize();
     Vectorf<N> rotate();
@@ -36,13 +40,23 @@ public:
 
     static Vectorf<N> AffineCSum (int n, float C[], Vectorf<N> Q[]);
     static Vectorf<N> AffineDsum (int n, float d[], Vectorf<N> Q[]);
+    friend Vectorf<N> extend(Vectorf<N> V, size_t dim) ;
 
 private:
     float pos[N];
-    float e;
+    float e; //default = 0
 };
 
 
-
+// ============= Helper functions =====================
+/**
+ * Fast sgn function for valid types: double, float, int and other constructible types from 0
+ * @tparam T type to extract sign from
+ * @param val value to extract sign from
+ * @return the sign of val when applicable
+ */
+template<typename T> int sgn(T val){
+    return (T(0) < val) - (val < T(0));
+}
 
 

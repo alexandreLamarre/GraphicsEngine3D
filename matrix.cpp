@@ -476,15 +476,15 @@ std::vector<T> Matrix<T, N>::col() {
 
 }
 
-template<typename T, size_t N>
-Vector Matrix<T, N>::rowVector() {
-
-}
-
-template<typename T, size_t N>
-Vector Matrix<T, N>::rowColumn() {
-
-}
+//template<typename T, size_t N>
+//Vector Matrix<T, N>::rowVector() {
+//
+//}
+//
+//template<typename T, size_t N>
+//Vector Matrix<T, N>::rowColumn() {
+//
+//}
 
 
 template<typename T, size_t N>
@@ -501,8 +501,8 @@ template<typename T, size_t N>
 Matrix<T, N> Matrix<T, N>::operator*(float c) const {
 
 }
-template<typename T, size_t N>
-Matrix<T, N> operator*(Matrix<T, N> M, Vector V) {
-
-}
-
+//template<typename T, size_t N>
+//Matrix<T, N> operator*(Matrix<T, N> M, Vector V) {
+//
+//}
+//

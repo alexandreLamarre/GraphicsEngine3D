@@ -71,12 +71,12 @@ public:
     Matrix(std::initializer_list<T> elems, size_t dim);
     std::vector<T> row();
     std::vector<T> col();
-    Vector rowVector(); // rows must be 3D float tuple only
-    Vector rowColumn(); //cols must be 3D float tuple only
+//    Vector rowVector(); // rows must be 3D float tuple only
+//    Vector rowColumn(); //cols must be 3D float tuple only
     Matrix<T,N> operator+(Matrix<T,N>) const;
     Matrix<T,N> operator-(Matrix<T,N>) const;
     Matrix<T,N> operator*(float c) const;
-    friend Matrix<T,N> operator*(Matrix<T,N> M, Vector V);
+//    friend Matrix<T,N> operator*(Matrix<T,N> M, Vector V);
 private:
     size_t size;
     std::vector<T> elems;
