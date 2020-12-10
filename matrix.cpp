@@ -34,9 +34,9 @@ Matrixf<N>::Matrixf(std::initializer_list<float> elements) {
 
     for(auto &el: elements){
         elems.push_back(el);
-        if(elems.size() >= N*N){break;}
+        if(elems.size() >= N*N){break;} //truncate additional elements
     }
-
+    // pad with zeroes as necessary
     for(int i = 0; i < elems.size() - N*N; i++){
         elems.push_back(0);
     };
@@ -56,14 +56,19 @@ Matrixf<N>::Matrixf(std::initializer_list<std::initializer_list<float>> elements
     for(auto el_list: elements){
         for(auto el: el_list){
             elems.push_back(el);
-            if(elems.size()%N == 0){break;}
+            if(elems.size()%N == 0){break;} //truncate extra elements
         }
-
+        //pad with zeroes as necessary
         if(elems.size()%N != 0){
             for(int i = 0; i < N - elems.size()%N; i++){
                 elems.push_back(0);
             }
         }
+        if(elems.size() == N*N) break; // truncate extra columns
+    }
+    //pads with zeroes if not enough columns are specified
+    for(int i = 0; i < N*N - elems.size(); i++){
+        elems.push_back(0.0);
     }
 };
 
@@ -365,18 +370,96 @@ void getCofactor(float matrix[N][N], float temp[N][N], int p, int q, int n){
             }
         }
     }
-
 }
 
 
 
+//================NMatrixf: Float nxm general Matrix methods=====================
+
+/**
+ * Default simple initializer for a zero nxm general matrix.
+ * Issues warnings if you construct a square matrix using this data type.
+ * @tparam n num rows
+ * @tparam m num cols
+ */
+template<size_t n, size_t m>
+NMatrixf<n, m>::NMatrixf() {
+    if(n == m){
+        std::cout << "Warning: square matrix intialize as general matrix, expected"
+                  << "square matrix methods will not be available";
+    }
+    num_rows = n;
+    num_cols = m;
+    for(int i = 0; i < n*m; i++){
+        elems.push_back(0.0);
+    }
+}
+
+/**
+ * Initializer for General(non-square) matrix using an intializer list.
+ * The list fills the columns of the matrix (by the convention we define).
+ * Pads with zeroes and truncates input as necessary.
+ * Position vectors in these matrices will always be columns.
+ * A warning will be generated if n == m, letting users know that a
+ * square matrix instatiated as a general matrix will not have access to
+ * square matrix methods.
+ * @tparam n num rows of matrix
+ * @tparam m num cols of matrix
+ */
+template<size_t n, size_t m>
+NMatrixf<n, m>::NMatrixf(std::initializer_list<float> input) {
+    if(n == m){
+        std::cout << "Warning: square matrix intialize as general matrix, expected"
+                     << "square matrix methods will not be available";
+    }
+    num_rows = n;
+    num_cols = m;
+    for(auto el: input){
+        elems.push_back(el);
+        if(elems.size() == n*m) break; //truncate additional elements
+    }
+    //pad with zeroes as necessary
+    for(int i = 0; i < n*m - elems.size(); i++){
+        elems.push_back(0.0);
+    }
+}
+
+/**
+ * Initializer for general(non-square) matrix using a nested initializer list.
+ * The nested lists represent the columns of the matrix.
+ * Pads with zeroes and truncates each column based on input as necessary,.
+ * @tparam n num rows of matrix
+ * @tparam m num cols of matrix
+ * @param input the 2D initializer list specifying the columns of the matrix in order
+ */
+template<size_t n, size_t m>
+NMatrixf<n, m>::NMatrixf(std::initializer_list<std::initializer_list<float>> input) {
+    if(n == m){
+        std::cout << "Warning: square matrix intialize as general matrix, expected"
+                  << "square matrix methods will not be available";
+    }
+    num_rows = n;
+    num_cols = m;
+    for(auto col: input){
+        for(auto el: col){
+            elems.push_back(el);
+            if(elems.size()%m == 0) break; //truncate additional elements
+        }
+        //pad with zeroes as necessary
+        for(int i = 0; i < m - elems.size()%m; i++){
+            elems.push_back(0.0);
+        }
+        if(elems.size() == n*m) break; // truncate extra columns
+    }
+    //pads with zeroes if not enough columns are specified
+    for(int i = 0; i < n*m - elems.size(); i++){
+        elems.push_back(0.0);
+    }
+}
 
 
-//================NMatrixf: Float nxm Matrix methods=====================
 
-
-
-//General Square Matrix methods
+// ================= General Square Matrix methods ========================
 template<typename T, size_t N>
 Matrix<T, N>::Matrix(std::initializer_list<T> objs, size_t dim) {
     elems = objs;

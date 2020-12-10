@@ -43,11 +43,14 @@ private:
 
 
 /**
- * Non-square custom dimension matrix object that stores only floats
+ * Non-square custom dimension matrix object that stores only floats.
+ * Should only be used when necessary to improve time/space complexity
+ * of some calculations.
  */
 template<size_t n, size_t m>
 class NMatrixf{
 public:
+    NMatrixf();
     NMatrixf(std::initializer_list<float>);
     NMatrixf(std::initializer_list<std::initializer_list<float>>);
 private:
@@ -55,6 +58,7 @@ private:
     size_t num_rows;
     std::vector<float> elems;
 };
+
 
 /**
  * more general Square matrix object that stores elements of type T
