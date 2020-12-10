@@ -5,27 +5,44 @@
 #include <iostream>
 
 /**
- * Class for Vector and Point Objects in affine algebra (for graphics engines).
- * Distinctions between the two will be made in naming of
- * Vector type objects.
- *
+ * General n-dimensional Vector/Point float class.  * Distinctions between the two
+ * should be made in the naming of the object.
+ * Stores 1 extra float for clipping/culling and collision detection.
  * Vector type objects follow the convention of being column-vectors;
- * so that matrix multiplication is done from the left.
+ * so that matrix transformations are done from the left.
+ * 3 dimensional vectors are 16-bit, so compatible with console development.
+ * @tparam N dimension of float vector
  */
-class Vector{
+template<size_t N>
+class Vectorf{
 public:
-    Vector();
-    Vector(float x, float y, float z, float c);
-    Vector operator+ (Vector V) const;
-    Vector operator- (Vector V) const;
-    Vector operator* (float c) const;
-    friend Vector operator* (float c, Vector V);
-    Vector Rotate(int axis);
-    Vector generalRotate(Vector directionVector);
-    friend std::ostream& operator<< (std::ostream &o, Vector V);
-    static Vector AffineCSum (int N, float C[], Vector Q[]);
-    static Vector AffineDsum (int N, float d[], Vector Q[]);
+    Vectorf();
+    Vectorf(std::initializer_list<float>);
+    Vectorf<N> operator+(Vectorf<N> V);
+    Vectorf<N> operator-(Vectorf<N> V);
+    float operator*(Vectorf<N> V); //dotproduct
+    Vectorf<N> operator^(Vectorf<N> V); //cross product
+    friend Vectorf<N> operator*(float c, Vectorf<N> V);
+    friend std::ostream& operator<< (std::ostream &o, Vectorf<N> V);
+
+    Vectorf<N> normalize();
+    Vectorf<N> rotate();
+    Vectorf<N> gRotate();
+    Vectorf<N> reflect();
+    Vectorf<N> gReflect();
+    Vectorf<N> oProject(); //orthogonal projection
+    Vectorf<N> sProject(); //spherical projection
+    Vectorf<N> pProject(); //plane projection
+
+    static Vectorf<N> AffineCSum (int n, float C[], Vectorf<N> Q[]);
+    static Vectorf<N> AffineDsum (int n, float d[], Vectorf<N> Q[]);
+
 private:
-    float tuple[4]{}; // (x,y,z, collision), collision should always be initialized to 0.0 for a new vector/point
+    float pos[N];
+    float e;
 };
+
+
+
+
 
