@@ -20,6 +20,7 @@ public:
     Matrixf();
     Matrixf(std::initializer_list<float> elements);
     Matrixf(std::initializer_list<std::initializer_list<float>> elements);
+    explicit Matrixf(std::string &special_matrix);
     std::vector<float> row(int index);
     std::vector<float> col(int index);
     Matrixf<N> operator+(Matrixf<N> M) const;

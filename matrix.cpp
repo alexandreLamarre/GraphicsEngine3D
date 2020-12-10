@@ -72,6 +72,23 @@ Matrixf<N>::Matrixf(std::initializer_list<std::initializer_list<float>> elements
     }
 };
 
+/**
+ * Constructor the builds unit transformation matrices
+ * based on the x,y,z axes labeled as i,j,k by convention in linear algebra.
+ * @tparam N
+ * @param special_matrix char identifier for a special matrix 'i', 'j' or 'k'
+ */
+template<size_t N>
+Matrixf<N>::Matrixf(std::string &special_matrix){
+    size = N;
+    for(int i = 0 ; i < N; i++){
+        elems.push_back(0.0);
+    }
+    if(special_matrix == "i") elems[0] = 1.0;
+    if(special_matrix == "j" && N>= 2) elems[N+1] = 1.0;
+    if(special_matrix == "k" && N>=3 ) elems[2*N+2] = 1.0;
+
+}
 
 /**
  * Returns a std::vector containing the row with given index
