@@ -194,9 +194,9 @@ template<size_t N>
 std::ostream &operator<<(std::ostream &os, Vectorf<N> V) {
     os << "Position : ";
     for(int i = 0; i < N; i ++){
-        os << pos[i]<<" , ";
+        os << V.pos[i]<<" , ";
     }
-    os << "Collision : " << e;
+    os << "Collision : " << V.e;
 }
 
 template<size_t N>
