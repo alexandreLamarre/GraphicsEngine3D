@@ -187,12 +187,13 @@ Matrixf<N> Matrixf<N>::operator^(int power) {
      if(power == 0){
         return Matrixf<N>(); //the identity matrix of dim N
      }
-     if(power < 0){
-        //invert the matrix if possible then apply successive mult.
-     }
-     if(power > 0){
 
-     }
+     Matrixf<N> new_matrix = this;
+     if(power < 0) new_matrix = this->invert();
+
+     for(int i = 1; i < abs(power); i++){new_matrix = new_matrix*new_matrix;}
+     return new_matrix;
+
 }
 
 /**
@@ -215,21 +216,32 @@ float Matrixf<N>::dotProduct(const std::vector<float> row, const std::vector<flo
 }
 
 /**
- *
- * @tparam N
- * @return
+ * Invert the square matrix if possible, otherwise return itself
+ * @tparam N dimension of the square matrix
+ * @return the inverted matrix, if possible
  */
 template<size_t N>
 Matrixf<N> Matrixf<N>::invert() {
-    if(this->det() == 0) return this;
+    float res_det = this->det();
+    if(res_det == 0) return this; //non-invertible, return self
+    float adjoint[N][N] = adj(this);
+
+    std::vector<float> inv_elems;
+    for(int col = 0; col < N; col++){
+        for(int row = 0; row < N; row++){
+            inv_elems.push_back(adjoint[row][col]/res_det);
+        }
+    }
+    return Matrixf<N>{inv_elems};
 
 }
 
 /**
- *
- * @tparam N
- * @param M
- * @return
+ * The determinant of a square matrix.
+ * Converts Matrixf object to 2D array to be called by helper methods.
+ * @tparam N Dimension of the square matrix
+ * @param M The matrix whose determinant we want to find.
+ * @return determinant of matrix M
  */
 template<size_t N>
 float det(Matrixf<N> M) {
@@ -244,11 +256,12 @@ float det(Matrixf<N> M) {
 }
 
 /**
- *
- * @tparam N
- * @param M
- * @param cur_size
- * @return
+ * Determinant helper function, uses 2D array of floats to compute
+ * cofactors & determinants
+ * @tparam N dimension of the square matrix
+ * @param M the 2D array representing the matrix M
+ * @param cur_size dimension of submatrix when recursively calculating det
+ * @return determinant of M
  */
 template<size_t N>
 float det(float matrix[N][N], size_t cur_size) {
@@ -285,12 +298,81 @@ std::vector<float> Matrixf<N>::operator[](int index) {
 }
 
 
+/**
+ * Public method for determining the adjoint of a matrix.
+ * Returns a 2D array representing the matrix, for use in invert()
+ * matrixf method.
+ * @tparam N dimension of the square matrix
+ * @param M the matrix whose adjoint we want to find
+ */
+template<size_t N>
+void adj(Matrixf<N> M){
+    float submatrix[N][N];
+    //constructing reusable 2-D float array
+    for(int row = 0; row < N; row++){
+        for(int col = 0; col < N; col++){
+            submatrix[row][col] = M[row][col];
+        }
+    }
+    float adj[N][N];
+    adj(submatrix, adj); // copy adjoint matrix to 2d array data
+    return adj;
+
+}
+
+
+/**
+ * Adjoint helper functiion that takes 2D array representation
+ * of a matrixf object. Copies adjoint matrix entries to a 2D array.
+ * @tparam N dimension of the square matrix
+ * @param matrix the matrix whose adjoint we want to find
+ * @param ADJ 2D array whose memory is allocated for use to copy adjoint data into
+ */
+template<size_t N>
+void adj(float matrix[N][N], float ADJ[N][N]) {
+    if(N == 1) {ADJ[0][0] = 1; return;}
+    int s = 1;
+    float t[N][N];
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            getCofactor(matrix,t,i,j,N);
+            s = (i+j)%2 == 0? 1: -1;
+            ADJ[j][i] = s* det(t, N-1);
+        }
+    }
+}
+
+/**
+ * Helper function to calculate the cofactor of a given entry of a matrix.
+ * @tparam N dimension of the square matrix
+ * @param matrix the2d array representation of a matrix
+ *          whose cofactor entries we want to find
+ * @param temp 2d array used to store cofactor calculations
+ * @param p index to row we just removed in cofactor expansion
+ * @param q index to col we just removed in cofactor expansion
+ * @param n submatrix size at given iteration
+ */
+template<size_t N>
+void getCofactor(float matrix[N][N], float temp[N][N], int p, int q, int n){
+    int i =0; int j = 0;
+    for(int r = 0; r < n; r++){
+        for(int c = 0; c <n; c++){
+            if(r!= p && c!=q){
+                temp[i][j++] = matrix[r][c];
+                if(j == n-1){
+                    j = 0; i++;
+                }
+            }
+        }
+    }
+
+}
 
 
 
 
 
-//NMatrixf: Float nxm Matrix methods
+//================NMatrixf: Float nxm Matrix methods=====================
 
 
 

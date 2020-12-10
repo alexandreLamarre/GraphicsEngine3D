@@ -31,10 +31,13 @@ public:
     static float dotProduct(std::vector<float> row, std::vector<float> col);
     Matrixf<N> invert();
     friend float det(Matrixf<N> M);
+    friend float* adj(Matrixf<N> M);
 private:
     size_t size;
     std::vector<float> elems;
     friend float det(float matrix[N][N], size_t cur_size);
+    friend void adj(float matrix[N][N], float ADJ[N][N]);
+    friend void getCofactor(float matrix[N][N], float temp[N][N], int p, int q, int n);
 };
 
 
@@ -46,6 +49,7 @@ template<size_t n, size_t m>
 class NMatrixf{
 public:
     NMatrixf(std::initializer_list<float>);
+    NMatrixf(std::initializer_list<std::initializer_list<float>>);
 private:
     size_t num_cols;
     size_t num_rows;
