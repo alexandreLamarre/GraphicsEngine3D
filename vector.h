@@ -4,6 +4,7 @@
 #endif //GRAPHICSENGINE3D_VECTOR_H
 #include <iostream>
 
+
 /**
  * General n-dimensional Vector/Point float class.  * Distinctions between the two
  * should be made in the naming of the object.
@@ -30,8 +31,8 @@ public:
     friend std::ostream& operator<< (std::ostream &os, Vectorf<N> V);
 
     Vectorf<N> normalize();
-    Vectorf<N> rotate();
-    Vectorf<N> gRotate();
+    Vectorf<N> rotate3(std::string& plane, float radians); //3d orthonormal rotation
+    Vectorf<N> gRotate3(float axis[3], float radians); // general 3d rotation
     Vectorf<N> reflect();
     Vectorf<N> gReflect();
     Vectorf<N> oProject(); //orthogonal projection
@@ -40,7 +41,7 @@ public:
 
     static Vectorf<N> AffineCSum (int n, float C[], Vectorf<N> Q[]);
     static Vectorf<N> AffineDsum (int n, float d[], Vectorf<N> Q[]);
-    friend Vectorf<N> extend(Vectorf<N> V, size_t dim) ;
+    friend Vectorf<N> extend(Vectorf<N> V, size_t dim);
 
 private:
     float pos[N];

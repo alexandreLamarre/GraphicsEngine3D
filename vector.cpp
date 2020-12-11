@@ -1,6 +1,7 @@
 #include "vector.h"
 #include <iostream>
 #include <math.h>
+#include "matrix.h"
 
 //Implementation Details of Float Vector 'Vectorf<N>' objects.
 
@@ -199,19 +200,90 @@ std::ostream &operator<<(std::ostream &os, Vectorf<N> V) {
     os << "Collision : " << V.e;
 }
 
+/**
+ * Return a vector that is the normalized vector of the input
+ * @tparam N dimension of the vector
+ * @return the normalized vector
+ */
 template<size_t N>
 Vectorf<N> Vectorf<N>::normalize() {
-    return Vectorf<N>();
+    float min_val = 0.0;
+    for(int i = 0; i < N; i++){
+        if(pos[i] < min_val) min_val = pos[i];
+    }
+
+    //now sum
+    float sum = 0.0;
+    for(int i = 0; i < N; i++){
+        sum += min_val+pos[i];
+    }
+
+    float new_pos[N];
+    for(int i = 0; i < N; i++){
+        new_pos = (pos[i]+min_val)/sum;
+    }
+    return Vectorf<N>{*new_pos};
 }
 
+/**
+ * 3d Rotation of a 3d vector about orthonormal planes "xy", "yz" and "xz".
+ * Alternatively, you can specify a rotation direction "z", "x and "y".
+ * @tparam N dimension of the vector to rotate
+ * @param plane the string identifier for which standard orthonormal
+ * plane to rotate the vector about
+ * @param radians the amount to rotate the vector by
+ * @return rotated vector by input plane
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::rotate() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::rotate3(std::string&plane, float radians) {
+    if(N != 3){
+        std::cout << "Warning: called 3d rotate on non 3d vector. Returning input vector.";
+        return this;
+    }
+    float ccos = std::cos(radians);
+    float csin = std::sin(radians);
+    if(plane == "xy" || plane == "z"){
+        Matrixf<N> I = new Matrixf<N>();
+        Matrixf<N> S{0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 1.0, -1.0, 1.0};
+        return (I+(csin*S)*this + (1-ccos*S^2))*this;
+    }
+    if(plane == "yz" || plane == "x"){
+        Matrixf<N> I = new Matrixf<N>();
+        Matrixf<N> S{1.0 , 1.0, -1.0, -1.0, 0, 0, 1.0, 0.0, 0.0};
+        return (I+(csin*S)*this + (1-ccos*S^2))*this;
+    }
+    if(plane == "xz" || plane == "y"){
+        Matrixf<N> I = new Matrixf<N>();
+        Matrixf<N> S{0.0 , 1.0, -0.0, -1.0, 0.0, 1.0, 0.0, -1.0, 0.0};
+        return (I+(csin*S)*this + (1-ccos*S^2))*this;
+    }
+    std::cout << "Warning: invalid 3d plane or direction provided. Returning input vector.";
+    return this;
+
 }
 
+/**
+ * general 3D rotation of 3D vector about provided axis.
+ * Should only be used if necessary otherwise rotate3 should be used
+ * for rotation about the standard orthonormal axes.
+ * @tparam N dimension of the vector
+ * @param axis the normalized vector axis to rotate our vector around
+ * @param radians the amount to rotate the vector by
+ * @return the vector rotate by given radians about given axis
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::gRotate() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::gRotate3(float axis[3], float radians) {
+    if(N!= 3){
+        std::cout << "Warning: called 3d rotate on non 3d vector. Returning input vector.";
+        return this;
+    }
+    float ccos = std::cos(radians);
+    float csin = std::sin(radians);
+    float x = axis[0]; float y = axis[1]; float z = axis[2];
+    Matrixf<N> R{ccos + pow(x,2)*(1-ccos), x*y*(1-ccos)+z*csin, z*x*(1-ccos) -y*csin,
+                 x*y*(1-ccos)+z*csin, ccos+pow(y,2)*(1-ccos), y*z*(1-ccos) - x*csin,
+                 x*z*(1-ccos)+y*csin, y*z*(1-ccos) - x*csin, ccos+pow(z,2)*(1-ccos)};
+    return R*this;
 }
 
 template<size_t N>
