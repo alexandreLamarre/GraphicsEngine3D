@@ -286,14 +286,56 @@ Vectorf<N> Vectorf<N>::gRotate3(float axis[3], float radians) {
     return R*this;
 }
 
+/**
+ * Reflection method for 3d vector vectors through a specified plane.
+ * The plane can be "xy"/"z" or "yz"/"x" or "xz"/"y".
+ * @tparam N
+ * @param plane the string representation of a standard plane.
+ * @return
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::reflect() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::reflect3(std::string& plane) {
+    if(N!=3) {
+        std::cout << "Warning: 3D reflect method called on non-3D vector"
+        <<"Returning initial vector.";
+        return this;
+    }
+    Vectorf<N> Normal;
+    if(plane == "xy" || plane == "z"){
+        Normal = new Vectorf<N>{0,0,1};
+    }
+    if(plane == "xz" || plane == "y"){
+        Normal = new Vectorf<N>{0,1,0};
+    }
+    if(plane == "yz" || plane == "x"){
+        Normal = new Vectorf<N>{1,0,0};
+    }
+    Matrixf<N> I = new Matrixf<N>();
+    Matrixf<N> T = Matrixf<N>.mProduct(N,N);
+    return (I - 2*T)*this;
+
 }
 
+/**
+ * Reflection of a vector through a plane specified by its normal vector.
+ * Recall Normal vectors must be unit vectors and perpendicular to the plane.
+ * @tparam N
+ * @param normal the normal vector to the plane through which we are reflecting
+ * the vector.
+ * @return reflected vector through a plane orthogonal to the normal
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::gReflect() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::gReflect3(float normal[N]) {
+    if(N != 3){
+        std::cout << "Warning: general 3D reflect method called on non-3D vector"
+                  <<"Returning initial vector.";
+        return this;
+    }
+    float x = normal[0]; float y = normal[1]; float z = normal[2];
+    Matrixf<N> R = Matrixf<N>{1-std::pow(x,2), -x*y, -x*z,
+                              -x*y, 1-std::pow(y,2), -y*z,
+                              -x*z, -y*z, 1-std::pow(z,2)};
+    return R*this;
 }
 
 template<size_t N>

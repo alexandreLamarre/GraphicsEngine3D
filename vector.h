@@ -33,8 +33,9 @@ public:
     Vectorf<N> normalize();
     Vectorf<N> rotate3(std::string& plane, float radians); //3d orthonormal rotation
     Vectorf<N> gRotate3(float axis[3], float radians); // general 3d rotation
-    Vectorf<N> reflect();
-    Vectorf<N> gReflect();
+    Vectorf<N> reflect3(std::string& plane); //reflection through a plane
+    Vectorf<N> gReflect3(float pos[N]); //reflection through a plane specified by a normal
+
     Vectorf<N> oProject(); //orthogonal projection
     Vectorf<N> sProject(); //spherical projection
     Vectorf<N> pProject(); //plane projection
