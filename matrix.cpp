@@ -409,6 +409,8 @@ void getCofactor(float matrix[N][N], float temp[N][N], int p, int q, int n){
     }
 }
 
+
+
 /**
  * Vector product of vectors resulting in square matrix.
  * @tparam N dimension of the vectors
@@ -417,11 +419,11 @@ void getCofactor(float matrix[N][N], float temp[N][N], int p, int q, int n){
  * @return matrix from col-row vector product
  */
 template<size_t N>
-Matrixf<N> mProduct(Vectorf<N> A, Vectorf<N> B){
+Matrixf<N> Matrixf<N>::mProduct(Vectorf<N> A, Vectorf<N> B){
     float new_elems[N*N];
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
-            new_elems[i*N+j] = A[j]*B[i];
+            new_elems[i*N+j] = A.pos[j]*B.pos[i];
         }
     }
     return Matrixf<N>{*new_elems};
