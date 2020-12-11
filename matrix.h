@@ -35,6 +35,7 @@ public:
     Matrixf<N> invert();
     friend float det(Matrixf<N> M);
     friend float* adj(Matrixf<N> M);
+    friend Matrixf<N> mProduct(Vectorf<N> A, Vectorf<N> B);
 private:
     friend class Vectorf<N>;
     size_t size;
