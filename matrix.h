@@ -29,11 +29,14 @@ public:
     std::vector<float> operator[](int index);
     friend Matrixf<N> operator*(float c, Matrixf<N> M);
     friend Matrixf<N> operator*(Matrixf<N> M, Matrixf<N> K);
+    friend Vectorf<N> operator*(Matrixf<N> T, Vectorf<N> V); //left matrix mult
+    friend Vectorf<N> operator*(Vectorf<N> V, Matrixf<N> M);
     static float dotProduct(std::vector<float> row, std::vector<float> col);
     Matrixf<N> invert();
     friend float det(Matrixf<N> M);
     friend float* adj(Matrixf<N> M);
 private:
+    friend class Vectorf<N>;
     size_t size;
     std::vector<float> elems;
     friend float det(float matrix[N][N], size_t cur_size);

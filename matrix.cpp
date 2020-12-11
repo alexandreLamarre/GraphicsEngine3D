@@ -194,6 +194,26 @@ Matrixf<N> operator*(Matrixf<N> M, Matrixf<N> K) {
     return m_matrix;
 }
 
+template<size_t N>
+Vectorf<N> operator*(Matrixf<N> T, Vectorf<N> V){
+    float new_pos[N];
+    for(int i = 0; i < N; i++){
+        Vectorf<N> Ti{T.row(i)};
+        new_pos[i] = Ti*V;
+    }
+    return Vectorf<N>{*new_pos};
+}
+
+template<size_t N>
+Vectorf<N> operator*(Vectorf<N> V, Matrixf<N> M){
+    float new_pos[N];
+    for(int i = 0; i < N; i++){
+        Vectorf<N> Mi{M.col(i)};
+        new_pos[i] = V*Mi;
+    }
+    return Vectorf<N>{*new_pos};
+}
+
 
 /**
  * Standard Matrix algebra exponentiation.
