@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/camera.cpp">
+			<Option target="vector.h"/>
+		</Unit>
+		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/camera.h">
+			<Option target="vector.h"/>
+		</Unit>
 		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/main.cpp">
 			<Option target="vector.h"/>
 		</Unit>

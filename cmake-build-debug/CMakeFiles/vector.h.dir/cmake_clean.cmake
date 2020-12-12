@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/vector.h.dir/camera.cpp.obj"
   "CMakeFiles/vector.h.dir/main.cpp.obj"
   "CMakeFiles/vector.h.dir/matrix.cpp.obj"
   "CMakeFiles/vector.h.dir/vector.cpp.obj"

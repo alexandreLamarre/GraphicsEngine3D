@@ -3,4 +3,4 @@ project(GraphicsEngine3D)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(vector.h vector.cpp matrix.h matrix.cpp main.cpp)
+add_executable(vector.h vector.cpp matrix.h matrix.cpp main.cpp camera.h camera.cpp)
