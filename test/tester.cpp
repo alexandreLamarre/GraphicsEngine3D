@@ -4,8 +4,9 @@
 
 /**
  * Initialize a unittest object
+ * @param identifier the name/identifier of the unittest object
  */
-Tester::Tester(){
+Tester::Tester(std::string &identifier){
     messages = "";
     num_tests = 0;
     passed = 0;
@@ -55,6 +56,6 @@ void Tester::addFailMessage(std::string &m){
  * @return output stream
  */
 std::ostream& operator<<(std::ostream &os, const Tester &t){
-    os << t.passed << "/" << t.num_tests << " tests passed. \n" << t.messages;
+    os << t.passed << "/" << t.num_tests <<  t.name<<" tests passed. \n" << t.messages;
     return os;
 }

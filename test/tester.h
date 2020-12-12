@@ -9,15 +9,17 @@
  */
 class Tester{
 public:
-    Tester();
+    Tester(std::string &identifier);
     void add(bool s, std::string &m);
     void add(bool s, std::string &m, std::string &e, std::string &g);
     friend std::ostream& operator<<(std::ostream &os, const Tester& t);
 private:
-    void addFailMessage(std::string &m);
+    std::string name;
     std::string messages;
     int num_tests;
     int passed;
+
+    void addFailMessage(std::string &m);
 };
 
 
