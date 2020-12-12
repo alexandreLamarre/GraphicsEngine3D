@@ -113,7 +113,7 @@ test/clean: test/CMakeFiles/tester.h.dir/clean
 CMakeFiles/vector.h.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\vector.h.dir\build.make CMakeFiles/vector.h.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\vector.h.dir\build.make CMakeFiles/vector.h.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles --progress-num=3,4,5,6,7 "Built target vector.h"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles --progress-num=4,5,6,7,8 "Built target vector.h"
 .PHONY : CMakeFiles/vector.h.dir/all
 
 # Build rule for subdir invocation for target.
@@ -140,12 +140,12 @@ CMakeFiles/vector.h.dir/clean:
 test/CMakeFiles/tester.h.dir/all:
 	$(MAKE) $(MAKESILENT) -f test\CMakeFiles\tester.h.dir\build.make test/CMakeFiles/tester.h.dir/depend
 	$(MAKE) $(MAKESILENT) -f test\CMakeFiles\tester.h.dir\build.make test/CMakeFiles/tester.h.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target tester.h"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target tester.h"
 .PHONY : test/CMakeFiles/tester.h.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/tester.h.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test/CMakeFiles/tester.h.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alex7\CLionProjects\GraphicsEngine3D\cmake-build-debug\CMakeFiles 0
 .PHONY : test/CMakeFiles/tester.h.dir/rule

@@ -1,11 +1,4 @@
 "C:\Program Files\JetBrains\CLion 2020.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\alex7\CLionProjects\GraphicsEngine3D
-CMake Error at CMakeLists.txt:6 (add_subdirectory):
-  The source directory
-
-    C:/Users/alex7/CLionProjects/GraphicsEngine3D/test
-
-  does not contain a CMakeLists.txt file.
-
-
--- Configuring incomplete, errors occurred!
-See also "C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug

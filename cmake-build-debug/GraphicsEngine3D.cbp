@@ -143,6 +143,9 @@
 		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/test/tester.h">
 			<Option target="tester.h"/>
 		</Unit>
+		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/test/vectorTests.cpp">
+			<Option target="tester.h"/>
+		</Unit>
 		<Unit filename="C:/Users/alex7/CLionProjects/GraphicsEngine3D/vector.cpp">
 			<Option target="vector.h"/>
 		</Unit>
