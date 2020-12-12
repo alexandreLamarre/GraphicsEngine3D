@@ -36,9 +36,10 @@ public:
     Vectorf<N> reflect3(std::string& plane); //reflection through a plane
     Vectorf<N> gReflect3(float pos[N]); //reflection through a plane specified by a normal
 
-    Vectorf<N> oProject(); //orthogonal projection
-    Vectorf<N> sProject(); //spherical projection
-    Vectorf<N> pProject(); //plane projection
+    Vectorf<N> scale(Vectorf<N> D, Vectorf<N> S);
+    Vectorf<N> orthoProject3(std::string &plane); //3D orthogonal projection onto plane
+    Vectorf<N> oblProject3(std::string &plane, Vectorf<N> D); // 3D oblique projection onto plane
+    Vectorf<N> pProject(Vectorf<N> E, Vectorf<N> P, Vectorf<N> Normal); //perspective projection
 
     static Vectorf<N> AffineCSum (int n, float C[], Vectorf<N> Q[]);
     static Vectorf<N> AffineDsum (int n, float d[], Vectorf<N> Q[]);

@@ -311,7 +311,7 @@ Vectorf<N> Vectorf<N>::reflect3(std::string& plane) {
         Normal = new Vectorf<N>{1,0,0};
     }
     Matrixf<N> I = new Matrixf<N>();
-    Matrixf<N> T = Matrixf<N>.mProduct(N,N);
+    Matrixf<N> T = I.mProduct(N,N);
     return (I - 2*T)*this;
 
 }
@@ -338,19 +338,112 @@ Vectorf<N> Vectorf<N>::gReflect3(float normal[N]) {
     return R*this;
 }
 
+/**
+ * Scale a vector in the direction in a direction vector D by an amount vector S
+ * @tparam N dimension of the vectors in input
+ * @param D direction vector specifying the direction to scale in
+ * @param S scale vector specying the amounts to scale in for each coordinate
+ * @return the scaled vector
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::oProject() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::scale(Vectorf<N> D, Vectorf<N> S){
+
+    Matrixf<N> sM;
+    Matrixf<N> M;
+    Matrixf<N> Mt;
+    float sElems[N*N];
+    float mElems[N*N];
+    float mtElems[N*N];
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            sElems[i*N+j] = 0.0;
+            mElems[i*N+j] = 0.0;
+            mtElems[i*N+j] = 0.0;
+
+            if(i == j) sElems[i*N+j] = S.pos[i];
+
+        }
+    }
+
+    return ((M*S)*Mt)*this;
 }
 
+/**
+ * 3D Orthogonal projection of a vector onto a plane labelled as
+ * "xy"/"z" or "xz"/"y" or "yz"/"x"
+ * @tparam N dimension
+ * @param plane the plane we want to project the point onto
+ * @return the vector projected onto the plane
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::sProject() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::orthoProject3(std::string &plane) {
+    if(N!=3) {
+        std::cout << "Warning: 3D orthogonal plane projection "
+                    << "called on non-3D vector"
+                    <<"Returning initial vector.";
+        return this;
+    }
+    Vectorf<N> Normal;
+    Vectorf<N> P = new Vectorf<N>{0,0,0}; //point on the plane
+    if(plane == "xy" || plane == "z"){
+        Normal = new Vectorf<N>{0,0,1};
+    }
+    if(plane == "xz" || plane == "y"){
+        Normal = new Vectorf<N>{0,1,0};
+    }
+    if(plane == "yz" || plane == "x"){
+        Normal = new Vectorf<N>{1,0,0};
+    }
+    Matrixf<N> I = new Matrixf<N>();
+    Matrixf<N> T = I.mProduct(N,N);
+    return (I - T)*this + (T)*P;
+}
+/**
+ * 3D oblique projection of a vector onto a plane identified by
+ * "xy"/"z" or "xz"/"y" or "yz"/"x"
+ * @tparam N dimension of the vectors/calculations
+ * @param plane the plane to project the vector onto
+ * @param D the direction in which to project,
+ * assuming it is not orthogonal to the plane
+ * @return the oblique projection of the vector onto the plane P in direction D
+ */
+template<size_t N>
+Vectorf<N> Vectorf<N>::oblProject3(std::string &plane, Vectorf<N> D) {
+    if(N!=3) {
+        std::cout << "Warning: 3D oblique plane projection "
+                  << "called on non-3D vector"
+                  <<"Returning initial vector.";
+        return this;
+    }
+    Vectorf<N> Normal;
+    Vectorf<N> P = new Vectorf<N>{0,0,0}; //point on the plane
+    if(plane == "xy" || plane == "z"){
+        Normal = new Vectorf<N>{0,0,1};
+    }
+    if(plane == "xz" || plane == "y"){
+        Normal = new Vectorf<N>{0,1,0};
+    }
+    if(plane == "yz" || plane == "x"){
+        Normal = new Vectorf<N>{1,0,0};
+    }
+    Matrixf<N> I = new Matrixf<N>();
+    return (I - (1/(D*N))*I.mproduct(D,N))*this + ((1/(D*N))*I.mproduct(D,N))*P;
 }
 
+
+/**
+ * Perspective projection onto a plane from the Eye point E
+ * @tparam N dimension
+ * @param E the Eye point E of the projection
+ * @param P a known point of the plane
+ * @param Normal normal vector to the plane
+ * @return the perspective projected vector from the eye point onto the plane
+ */
 template<size_t N>
-Vectorf<N> Vectorf<N>::pProject() {
-    return Vectorf<N>();
+Vectorf<N> Vectorf<N>::pProject(Vectorf<N> E, Vectorf<N> P, Vectorf<N> Normal) {
+
+    float t = (N*(E-P))/(N*(this-E));
+    return E+t*(this-E);
 }
 
 template<size_t N>
