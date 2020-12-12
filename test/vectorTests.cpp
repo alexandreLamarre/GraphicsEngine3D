@@ -112,10 +112,67 @@ Tester vector_std_operators(){
     return VT;
 }
 
+Tester vector_prod_tests(){
+    std::string test_name = "vector scalar/cross product";
+    std::string scalar_fail = "scalar product error";
+    Tester VT = Tester(test_name);
+
+    //============= scalar product ========================
+    float c1 = 1.0;
+    float c2 = 5.5;
+    float c3 = -1.2;
+
+    Vectorf<3> v1 = Vectorf<3>{};
+    Vectorf<3> v2 = Vectorf<3>{1.0, 1.0, 1.0};
+    Vectorf<3> v3 = Vectorf<3> {-2.0, 1.5, -3.5};
+
+    float res1[4]{0.0, 0.0, 0.0, 0.0};
+    Vectorf<3> u1 = c1*v1;
+    VT.add(u1.get() == res1, scalar_fail, res1, u1.get());
+
+    Vectorf<3> u2 = c2*v1;
+    VT.add(u2.get() == res1, scalar_fail, res1, u2.get());
+
+    Vectorf<3> u3 = c3*v1;
+    VT.add(u3.get(), scalar_fail, res1, u3.get());
+
+
+    float res2[4]{1.0, 1.0, 1.0, 0.0};
+    Vectorf<3> u4 = c1*v2;
+    VT.add(u4.get() == res2, scalar_fail, res2, u4.get());
+
+    float res3[4]{5.5, 5.5, 5.5, 0.0};
+    Vectorf<3> u5 = c2*v2;
+    VT.add(u5.get() == res3, scalar_fail, res3, u5.get());
+
+    float res4[4]{-1.2, -1.2, -1.2, 0.0};
+    Vectorf<3> u6 = c3*v2;
+    VT.add(u6.get() == res4, scalar_fail, res4, u6.get());
+
+    float res5[4]{-2.0, 1.5, -3.5};
+    Vectorf<3> u7 = c1*v3;
+    VT.add(u7.get() == res5, scalar_fail, res5, u7.get());
+
+    float res6[4]{-11.0, 8.25, -19.25};
+    Vectorf<3> u8 = c2*v3;
+    VT.add(u8.get() == res6, scalar_fail, res6, u8.get());
+
+    float res7[4]{2.4, -1.8, 4.2};
+    Vectorf<3> u9 = c3*v3;
+    VT.add(u9.get() == res7, scalar_fail, res7, u9.get());
+
+    // ============ cross product =====================
+
+
+
+    return VT;
+}
+
 std::vector<Tester> vectorTests(){
     std::vector<Tester> tests;
     tests.push_back(vector_constructor_tests());
     tests.push_back(vector_std_operators());
+    tests.push_back(vector_prod_tests());
 
 
     return tests;
