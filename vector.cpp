@@ -42,10 +42,23 @@ Vectorf<N>::Vectorf(std::initializer_list<float> input) {
         new_pos[i] = 0.0; // if not enough positions are specified set to 0
     }
     //if not enough parameters are specified, set collision to 0
-    if(cur_index <= N+1){
+    if(cur_index < N){
         e = 0;
     }
     pos = new_pos;
+}
+/**
+ * Get the position array of the vector with the collision parameter appended
+ * at the end of the array
+ * @tparam N dimension of the vector
+ * @return float array of position and (last index)collision
+ */
+template<size_t N>
+float *Vectorf<N>::get() {
+    float tup[N+1];
+    tup = pos;
+    tup[N] = e;
+    return tup;
 }
 
 /**
@@ -460,5 +473,7 @@ template<size_t N>
 Vectorf<N> extend(Vectorf<N> V, size_t dim) {
     return Vectorf<N + dim-N>{*V.pos};
 }
+
+
 
 

@@ -28,8 +28,8 @@ void Tester::add(bool s, std::string &m){
  * obtained behaviour from the test
  * @param s the boolean statement representing a unittest
  * @param m the error message to display should the test fail
- * @param e the expected result
- * @param g the obtained result
+ * @param e the expected result message
+ * @param g the obtained result message
  */
 void Tester::add(bool s, std::string &m, std::string &e, std::string &g){
     num_tests++;
@@ -58,4 +58,22 @@ void Tester::addFailMessage(std::string &m){
 std::ostream& operator<<(std::ostream &os, const Tester &t){
     os << t.passed << "/" << t.num_tests <<  t.name<<" tests passed. \n" << t.messages;
     return os;
+}
+
+/**
+ * Add a test result and error message containing the expected and
+ * obtained behaviour from the test
+ * @param s the boolean statement representing a unittest
+ * @param m the error message to display should the test fail
+ * @param e the expected result
+ * @param g the obtained result
+ */
+template<typename T, typename U>
+void Tester::add(bool s, std::string &m, T e, U g) {
+    num_tests++;
+    if(s) passed ++;
+    else {
+        std::string new_message = m + "\n" + "Expected :" << e + "\n" + "Got: " << g;
+        addFailMessage(new_message);
+    }
 }

@@ -12,6 +12,8 @@ public:
     Tester(std::string &identifier);
     void add(bool s, std::string &m);
     void add(bool s, std::string &m, std::string &e, std::string &g);
+    template<typename T, typename U>
+    void add(bool s, std::string &m, T e, U g);
     friend std::ostream& operator<<(std::ostream &os, const Tester& t);
 private:
     std::string name;

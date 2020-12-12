@@ -3,7 +3,7 @@
 
 #endif //GRAPHICSENGINE3D_VECTOR_H
 #include <iostream>
-
+#include "./tester.h"
 
 /**
  * General n-dimensional Vector/Point float class.  * Distinctions between the two
@@ -19,16 +19,19 @@ class Vectorf{
 public:
     Vectorf();
     Vectorf(std::initializer_list<float> input);
+    float* get();
     Vectorf<N> operator+(Vectorf<N> V);
     Vectorf<N> operator-(Vectorf<N> V);
     float operator*(Vectorf<N> V); //dot product
     Vectorf<N> operator^(Vectorf<N> V); //cross product
-    friend Vectorf<N> operator*(float c, Vectorf<N> V);
+    template<size_t n>
+    friend Vectorf<n> operator*(float c, Vectorf<n> V);
     float norm();
     float norm2(); //square of norm to avoid sqrt operations
     bool operator<(Vectorf<N> other_vector); //between origin and other vector
     bool operator<(float dist); // norm is smaller than given norm
-    friend std::ostream& operator<< (std::ostream &os, Vectorf<N> V);
+    template<size_t n>
+    friend std::ostream& operator<< (std::ostream &os, Vectorf<n> V);
 
     Vectorf<N> normalize();
     Vectorf<N> rotate3(std::string& plane, float radians); //3d orthonormal rotation
@@ -43,7 +46,9 @@ public:
 
     static Vectorf<N> AffineCSum (int n, float C[], Vectorf<N> Q[]);
     static Vectorf<N> AffineDsum (int n, float d[], Vectorf<N> Q[]);
-    friend Vectorf<N> extend(Vectorf<N> V, size_t dim);
+    template<size_t n>
+    friend Vectorf<n> extend(Vectorf<n> V, size_t dim);
+
 
 private:
     float pos[N];
