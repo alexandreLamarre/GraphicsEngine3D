@@ -142,6 +142,19 @@ vector.h/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\vector.h.dir\build.make CMakeFiles/vector.h.dir/build
 .PHONY : vector.h/fast
 
+#=============================================================================
+# Target rules for targets named tester.h
+
+# Build rule for target.
+tester.h: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 tester.h
+.PHONY : tester.h
+
+# fast build rule for target.
+tester.h/fast:
+	$(MAKE) $(MAKESILENT) -f test\CMakeFiles\tester.h.dir\build.make test/CMakeFiles/tester.h.dir/build
+.PHONY : tester.h/fast
+
 camera.obj: camera.cpp.obj
 
 .PHONY : camera.obj
@@ -258,6 +271,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... tester.h
 	@echo ... vector.h
 	@echo ... camera.obj
 	@echo ... camera.i

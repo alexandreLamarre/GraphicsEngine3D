@@ -1,3 +1,6 @@
 C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/CMakeFiles/vector.h.dir
 C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/test/CMakeFiles/edit_cache.dir
+C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/test/CMakeFiles/tester.h.dir
+C:/Users/alex7/CLionProjects/GraphicsEngine3D/cmake-build-debug/test/CMakeFiles/rebuild_cache.dir
