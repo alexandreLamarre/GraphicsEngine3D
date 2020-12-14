@@ -113,8 +113,9 @@ Tester vector_std_operators(){
 }
 
 Tester vector_prod_tests(){
-    std::string test_name = "vector scalar/cross product";
-    std::string scalar_fail = "scalar product error";
+    std::string test_name = "Vector scalar/cross product";
+    std::string scalar_fail = "Scalar product error";
+    std::string cross_fail = "Cross product error";
     Tester VT = Tester(test_name);
 
     //============= scalar product ========================
@@ -163,7 +164,61 @@ Tester vector_prod_tests(){
 
     // ============ cross product =====================
 
+    Vectorf<1> t1 = Vectorf<1>{};
+    Vectorf<1> t2 = Vectorf<1>{1.3};
 
+    Vectorf<1> resv1 = t1^t2;
+    float r1[2]{0.0, 0.0};
+    VT.add(resv1.get() == r1, cross_fail, r1, resv1);
+
+    Vectorf<1> resv2 = t2^t2;
+    float r2[2]{1.3*1.3, 0.0};
+    VT.add(resv2.get() == r2, cross_fail, r2, resv2);
+
+
+    Vectorf<3> t7 = Vectorf<3>{};
+    Vectorf<3> t8 = Vectorf<3>{1.3, 4.5, 1.3};
+    Vectorf<3> t9 = Vectorf<3>{9.9, 9.9, 3.0};
+    Vectorf<3> t10 = Vectorf<3>{88.0, 4.0, 12.12};
+
+
+    Vectorf<3> r3 = t7^t8;
+    float resv3[4]{0.0, 0.0, 0.0, 0.0};
+    VT.add(r3.get() == resv3, cross_fail, resv3, r3.get());
+
+    Vectorf<3> r4 = t8^t8;
+    float resv4[4]{0.0, 0.0, 0.0, 0.0};
+    VT.add(r4.get() == resv4, cross_fail, resv4, r4.get());
+
+    Vectorf<3> r5 = t8^t9;
+    float resv5[4]{0.63, 8.97, -31.68, 0.0};
+    VT.add(r5.get() == resv5, cross_fail, resv5, r5.get());
+
+    Vectorf<3> r7 = t8^t10;
+    float resv6[4]{49.34, 98.644, -390.8, 0.0};
+    VT.add(r7.get() == resv6, cross_fail, resv6, r7.get());
+
+    Vectorf<3> r6 = t9^t10;
+    float resv10[4]{107.988, 144.012, -831.6};
+    VT.add(r6.get() == resv10, cross_fail, resv10, r6.get());
+
+    Vectorf<3> r8 = t10^ t9;
+    float resv11[4]{-107.988, -144.012, 831.6};
+    VT.add(r8.get() == resv11, cross_fail, resv11, r8.get());
+
+    Vectorf<4> t11 = Vectorf<4>{};
+    Vectorf<4> r11 = t11^t11;
+    float resv7[5]{0.0, 0.0, 0.0, 0.0, 0.0};
+    VT.add(r11.get() == resv7, cross_fail, resv7, r11.get());
+
+    Vectorf<4> t12 = Vectorf<4>{3.0,4.0,5.0,6.0};
+    Vectorf<4> r12 = t12^t12;
+    float resv8[5]{3.0,4.0,5.0,6.0,0.0};
+    VT.add(r12.get() == resv8, cross_fail, resv8, r12.get());
+
+    Vectorf<4> r13 = t12^t11;
+    float resv9[5]{3.0, 4.0, 5.0, 6.0, 0.0};
+    VT.add(r13.get() == resv9, cross_fail, resv9, r13.get());
 
     return VT;
 }

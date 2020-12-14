@@ -114,17 +114,15 @@ float Vectorf<N>::operator*(Vectorf<N> V) {
  */
 template<size_t N>
 Vectorf<N> Vectorf<N>::operator^(Vectorf<N> V) {
-    if(N > 3){
-        std::cout << "Warning: cross product called on vector of dim > 3"
-        << "returning original vector.";
+    if(N > 3 || N == 2){
+        std::cout << "Warning: cross product called on vector of invalid dimension " << N
+        << " returning original vector.";
         return this;
     }
     if(N== 1){
         return Vectorf<1>{pos[0]*V.pos[1]}; //return dot product
     }
-    if(N == 2){
-        return Vectorf<1>{pos[0]*V.pos[1] - pos[1]*V.pos[0]};
-    }
+
     if(N==3){
         float new_pos[N];
         new_pos[0] = pos[1]*V.pos[2] - pos[2]*V.pos[1];
