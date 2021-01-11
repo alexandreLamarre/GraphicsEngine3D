@@ -1,9 +1,4 @@
-#ifndef GRAPHICSENGINE3D_VECTOR_H
-#define GRAPHICSENGINE3D_VECTOR_H
-
-#endif //GRAPHICSENGINE3D_VECTOR_H
 #include <iostream>
-#include "./tester.h"
 
 /**
  * General n-dimensional Vector/Point float class.  * Distinctions between the two

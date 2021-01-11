@@ -1,6 +1,6 @@
 #include "../vector.h"
 #include <vector>
-
+#include "tester.h"
 /**
  * Function that handles Vectorf unittests for its constructors
  * @return Tester object containing the results of the unittests
@@ -219,6 +219,53 @@ Tester vector_prod_tests(){
     Vectorf<4> r13 = t12^t11;
     float resv9[5]{3.0, 4.0, 5.0, 6.0, 0.0};
     VT.add(r13.get() == resv9, cross_fail, resv9, r13.get());
+
+    return VT;
+}
+
+Tester vector_normalize_tests(){
+    std::string test_name = "Vector norms and normalization";
+    std::string norm_fail = "Norm calculation error";
+    std::string norm2_fail = "Norm squared calculation error";
+    std::string norma_fail = "Vector normalization error";
+
+    float test_err = 0.01;
+    Tester VT = Tester(test_name);
+
+    return VT;
+}
+
+Tester vector_distance_tests(){
+    std::string test_name = "Vector distance";
+    Tester VT = Tester(test_name);
+
+    return VT;
+}
+
+Tester vector_rotation_tests(){
+    std::string test_name = "Vector rotation";
+    Tester VT = Tester(test_name);
+
+    return VT;
+}
+
+Tester vector_reflection_tests(){
+    std::string test_name = "Vector reflection";
+    Tester VT = Tester(test_name);
+
+    return VT;
+}
+
+Tester vector_scale_tests(){
+    std::string test_name = "Vector scale";
+    Tester VT = Tester(test_name);
+
+    return VT;
+}
+
+Tester vector_projection_tests(){
+    std::string test_name = "Vector projection tests";
+    Tester VT = Tester(test_name);
 
     return VT;
 }

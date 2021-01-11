@@ -1,8 +1,3 @@
-#ifndef GRAPHICSENGINE3D_MATRIX_H
-#define GRAPHICSENGINE3D_MATRIX_H
-
-#endif //GRAPHICSENGINE3D_MATRIX_H
-
 #include <stddef.h>
 #include <vector>
 #include "vector.h"
@@ -27,14 +22,22 @@ public:
     Matrixf<N> operator-(Matrixf<N> M) const;
     Matrixf<N> operator^(int power);
     std::vector<float> operator[](int index);
-    friend Matrixf<N> operator*(float c, Matrixf<N> M);
-    friend Matrixf<N> operator*(Matrixf<N> M, Matrixf<N> K);
-    friend Vectorf<N> operator*(Matrixf<N> T, Vectorf<N> V); //left matrix mult
-    friend Vectorf<N> operator*(Vectorf<N> V, Matrixf<N> M);
+
+    template<size_t n>
+    friend Matrixf<n> operator*(float c, Matrixf<n> M);
+    template<size_t n>
+    friend Matrixf<n> operator*(Matrixf<n> M, Matrixf<n> K);
+    template<size_t n>
+    friend Vectorf<n> operator*(Matrixf<n> T, Vectorf<n> V); //left matrix mult
+    template<size_t n>
+    friend Vectorf<n> operator*(Vectorf<n> V, Matrixf<n> M);
     static float dotProduct(std::vector<float> row, std::vector<float> col);
     Matrixf<N> invert();
-    friend float det(Matrixf<N> M);
-    friend float* adj(Matrixf<N> M);
+    template<size_t n>
+    friend float det(Matrixf<n> M);
+
+    template<size_t n>
+    friend float* adj(Matrixf<n> M);
     static Matrixf<N> mProduct(Vectorf<N> A, Vectorf<N> B);
 private:
     friend class Vectorf<N>;
